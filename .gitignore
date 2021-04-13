@@ -1,3 +1,15 @@
+# Download Folder for test
+apks/
+
+# Bot for automate convertion from .ui files to .py
+bot.bat
+
+# Test Files
+test.*.py
+
+# Without relevance info
+DATA.TXT
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
