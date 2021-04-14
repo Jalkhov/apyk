@@ -1,8 +1,9 @@
-from UI_Main import *
-from UI_BackupScreen import Ui_BackupDialog
-from Functions import *
-import sys
 import os
+import sys
+
+from Functions import *
+from UI_BackupScreen import Ui_BackupDialog
+from UI_Main import *
 
 version = "0.0.1"
 
