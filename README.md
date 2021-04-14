@@ -36,11 +36,11 @@ Download the latest version of **APyK** from [**HERE**](/jalkhov/apyk/releases/l
 
 🔎 **App name lookup**
 
-![1.Name_Lookup](\screenshots\1.Name_Lookup.PNG)
+![1.Name_Lookup](/screenshots/1.Name_Lookup.PNG)
 
 This warning is due to the fact that when listing the applications installed on your device they will look approximately as follows:
 
-````text
+```text
 org.telegram.messenger
 com.whatsapp
 com.facebook.lite
