@@ -13,6 +13,7 @@ class NewThread(QtCore.QThread):
 
     def __init__(self, action, param, parent=None):
         QtCore.QThread.__init__(self, parent)
+        self.alive = True
         self.action = action
         self.param = param
 
@@ -27,44 +28,58 @@ class NewThread(QtCore.QThread):
 
     def run(self):
         '''Run thread'''
-        adb = self.CheckAdb()
+        if self.alive == True:
+            adb = self.CheckAdb()
 
-        if self.action == 'check':
-            if adb == True:
-                out = subprocess.run(['adb', 'devices'],
-                                     stdout=subprocess.PIPE)
-                out = out.stdout.decode('utf8')
-                self.NTSignal.emit(out)
-            else:
-                self.NTSignal.emit(False)
-
-        elif self.action == 'packages':
-            for pkg in run("adb shell pm list packages"):
-                pkg = pkg.split(':')
-                pkg = pkg[1]
-
-                if self.param == True:
-                    name = AppLookup(pkg)
-                    if name == False:
-                        self.NTSignal.emit(pkg)
-                    else:
-                        self.NTSignal.emit(pkg + ' | ' + name)
-                else:
-                    self.NTSignal.emit(pkg)
-
-        elif self.action == 'collect_apks':
-            for pkg in self.param:
-                results = []
-                for out in run("adb shell pm path {0}".format(pkg)):
-                    results.append(out)
-                self.NTSignal.emit(results)
-
-        elif self.action == 'pull_apks':
-            pkgs = self.param
-            for pkg in pkgs:
-                for out in run(r"adb pull {0} apks\\{1}".format(pkgs[pkg], pkg)):
-                    # pass
+            if self.action == 'check':
+                if adb == True:
+                    out = subprocess.run(['adb', 'devices'],
+                                         stdout=subprocess.PIPE)
+                    out = out.stdout.decode('utf8')
                     self.NTSignal.emit(out)
+                else:
+                    self.NTSignal.emit(False)
+
+            elif self.action == 'packages':
+                for pkg in run("adb shell pm list packages"):
+                    pkg = pkg.split(':')
+                    pkg = pkg[1]
+
+                    if self.param == True:
+                        name = AppLookup(pkg)
+                        if name == False:
+                            self.NTSignal.emit(pkg)
+                        else:
+                            self.NTSignal.emit(pkg + ' | ' + name)
+                    else:
+                        self.NTSignal.emit(pkg)
+
+            elif self.action == 'backup':
+                for pkg in self.param:
+                    results = []
+                    for out in run("adb shell pm path {0}".format(pkg)):
+                        results.append(out)
+
+                    if len(results) > 1:  # more than one apk, so, select named base.apk
+                        target = [apk for apk in results if 'base' in apk][0]
+                    else:  # select the only apk
+                        target = results[0]
+
+                    # Split package word
+                    target = target.split('package:')[1]
+
+                    self.NTSignal.emit(b('Current package: ') + pkg)
+                    self.NTSignal.emit(b('APK path: ') + target)
+
+                    for out in run(r"adb pull {0} apks\\{1}".format(target, pkg)):
+                        if 'does not exist' in out:
+                            self.NTSignal.emit(
+                                b('Status: ') + bred('Remote object does not exist'))
+                        else:
+                            self.NTSignal.emit(
+                                b('Status: ') + bgreen('Successfully exported'))
+                    self.NTSignal.emit('---------')
+                    self.NTSignal.emit('Step')
 
 
 class BackupWindow(QtWidgets.QDialog, Ui_BackupDialog):
@@ -74,94 +89,48 @@ class BackupWindow(QtWidgets.QDialog, Ui_BackupDialog):
         QtWidgets.QDialog.__init__(self, parent)
         self.setupUi(self)
         self.setWindowIcon(QtGui.QIcon(os.path.join(ThisDir(), 'icon.png')))
-        self.DoingSomething = False
         self.items = items
-        self.itcount = len(items)
         self.SetLabelCount()
         self.SetBarConfig()
-        self.collected = {}
-        self.count1 = 0
-        self.count2 = 0
+        self.count = 0
+
+        # Create Thread Class for allow access from other methods
+        self.CollectThread = NewThread('backup', self.items)
         self.StartBackup()
+
+    def StartBackup(self):
+        self.CollectThread.NTSignal.connect(self.BackupTHROut)
+        self.CollectThread.finished.connect(self.AfterBackup)
+        self.CollectThread.start()
+        self.curr_process.setText('Backing up')
+
+    def BackupTHROut(self, output):
+        if not 'Step' in output:  # Show output in 'Console'
+            self.out.append(output)
+        elif 'Step' in output:  # Modify progressbar status
+            self.count += 1
+            self.progressBar.setValue(self.count)
+
+    def AfterBackup(self):
+        self.CollectThread.alive = False
+        self.curr_process.setText('Finished')
 
     def SetLabelCount(self):
         '''Assign number of packets to be processed to the label'''
-        self.pkgs_count.setText(str(self.itcount))
+        self.pkgs_count.setText(str(len(items)))
 
     def SetBarConfig(self):
-        self.progressBar.setMaximum(self.itcount * 2)
-
-    def StartBackup(self):
-        # Posibilidad de elegir un directorio para guardar backup
-        self.CollectThread = NewThread('collect_apks', self.items)
-        self.CollectThread.NTSignal.connect(self.CollectTHROut)
-        self.CollectThread.finished.connect(self.AfterCollect)
-        self.CollectThread.start()
-        self.DoingSomething = True
-
-        self.curr_process.setText('Collecting APKs')
-        self.out.append(b(':::: Collecting APKs ::::'))
-        self.out.append('')
-
-    def CollectTHROut(self, output):
-        self.count1 += 1
-        target = ''
-        if len(output) > 1:  # more than one apk, so, select named base.apk
-            target = [apk for apk in output if 'base' in apk][0]
-        else:  # select the only apk
-            target = output[0]
-
-        # Split package word
-        target = target.split('package:')[1]
-
-        # Get current package
-        curritem = self.items[self.count1 - 1]
-
-        # Append target to collected variable
-        self.collected[curritem] = target
-
-        self.out.append(b('Current package: ') + curritem)
-        self.out.append(b('APK path: ') + target)
-        self.out.append('')
-
-        self.progressBar.setValue(self.count1)
-
-    def AfterCollect(self):
-        self.curr_process.setText('Exporting APKs')
-        self.out.append(b(':::: Export process started ::::'))
-        self.out.append('')
-
-        self.PullThread = NewThread('pull_apks', self.collected)
-        self.PullThread.NTSignal.connect(self.PullTHROut)
-        self.PullThread.finished.connect(self.AfterPull)
-        self.PullThread.start()
-
-    def PullTHROut(self, output):
-        self.count1 += 1
-        self.count2 += 1
-        curritem = self.items[self.count2 - 1]
-        self.progressBar.setValue(self.count1)
-        if 'does not exist' in output:
-            self.out.append(b('{0}: '.format(curritem)) +
-                            bred('Remote object does not exist'))
-        else:
-            self.out.append(b('{0}: '.format(curritem)) +
-                            bgreen('Successfully exported'))
-
-    def AfterPull(self):
-        self.DoingSomething = False
-        self.curr_process.setText('Finished')
-        self.out.append('')
-        self.out.append(b('Finished'))
+        self.progressBar.setMaximum(self.itcount)
 
     def closeEvent(self, event):
-        if self.DoingSomething == True:
-            bsgbox = QtWidgets.QMessageBox
-            ret = bsgbox.question(
-                self, 'Exit?', 'There is a process in place, are you sure you want to leave?', bsgbox.Yes | bsgbox.No)
+        if self.CollectThread.alive == True:
+            ask = Ask(
+                self, 'Exit?', 'There is a process in place, are you sure you want to leave?')
 
-            if ret == bsgbox.Yes:
-                event.accept()  # let the window close
+            if ask == True:
+                self.CollectThread.alive = False
+                self.CollectThread.wait()
+                event.accept()
             else:
                 event.ignore()
 
@@ -172,27 +141,33 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         QtWidgets.QMainWindow.__init__(self)
         self.setupUi(self)
-        self.closeEvent = self.closeEvent
         self.setWindowIcon(QtGui.QIcon(os.path.join(ThisDir(), 'icon.png')))
         self.list_pkgs.itemSelectionChanged.connect(self.ShowSelected)
         self.filter_box.textChanged.connect(self.FilterPkgs)
         self.btn_backup.clicked.connect(self.StartBackup)
         self.actionAbout.triggered.connect(lambda: about(self, version))
+        self.closeEvent = self.closeEvent
+
         self.selected_pkgs.setHidden(True)
         self.btn_backup.setHidden(True)
         self.status_label.setHidden(True)
+
         self.Continue = True
         self.DoingSomething = False
         self.AppLookup = False
+
+        act = SearchName(self)
+        if act == True:
+            self.AppLookup = True
+
         self.CheckDevice()
 
     def closeEvent(self, event):
         if self.DoingSomething == True:
-            bsgbox = QtWidgets.QMessageBox
-            ret = bsgbox.question(
-                self, 'Exit?', 'There is a process in place, are you sure you want to leave?', bsgbox.Yes | bsgbox.No)
+            ask = Ask(
+                self, 'Exit?', 'There is a process in place, are you sure you want to leave?')
 
-            if ret == bsgbox.Yes:
+            if ask == True:
                 sys.exit()
             else:
                 event.ignore()
@@ -229,13 +204,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         else:
             if '\tdevice' in output:
                 device = [int(s) for s in output.split() if s.isdigit()]
-                print(device)
                 if len(device) == 1:
-                    # Ask if make App name lookup
-                    act = SearchName(self)
-                    if act == True:
-                        self.AppLookup = True
-
                     self.field_device.setText(str(device[0]))
                 else:
                     self.Continue = False
@@ -251,6 +220,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def AfterCheck(self):
         self.DoingSomething = False
         '''Executed at the end of the device check thread'''
+        # Continue is temporal, maybe is better show an alert an exit
         if self.Continue == True:
             self.GetPackages()
 
