@@ -8,6 +8,8 @@ Have basic knowledge of **ADB (Android Debug Bridge)**, you will need to install
 
 APyK was tested and programmed with **ADB version 1.0.32 Revision eac51f2bb6a8-android**.
 
+
+
 ## 🐍 - Installation from Python
 
 You can use **APyK** from Python.
@@ -20,15 +22,16 @@ After install type **apyk** and press **Enter**
 
 <p align="center"><b>OR</b></p>
 
-## :arrow_heading_down: ​- Download executable
+## ⬇️ - Download executable
 
 Download the latest version of **APyK** from [**HERE**](/jalkhov/apyk/releases/latest/download/asset-name.zip). After downloading extract and run the **apyk.exe** file located in the extracted folder.
 
-## :blue_book: - Usage
+
+
+## 📘 - Usage
 
 <details>
-  <summary>Click to expand mini-tutorial!</summary>
-
+  <summary>🔽 <span style="color:red"><b>Click here to expand tutorial!</b></span> 🔽</summary>
 
 ##### 👀 Remember
 
@@ -39,7 +42,7 @@ Download the latest version of **APyK** from [**HERE**](/jalkhov/apyk/releases/l
 
 ##### 🔎 App name lookup
 
-![1.Name_Lookup](screenshots/1.Name_Lookup.PNG)
+![1.Name_Lookup](https://i.imgur.com/E15SW4e.png)
 
 This warning is due to the fact that when listing the applications installed on your device they will look approximately as follows:
 
@@ -74,7 +77,7 @@ At once I say that this option is courtesy of the library [**google-play-scraper
 
 Once you have made a decision regarding the above option, if you have the above **[HERE](#-remember)**, the program will automatically start searching for the installed applications, and if everything went well, it will display the respective list.
 
-![2.Main_Screen](screenshots/2.Main_Screen.PNG)
+![2.Main_Screen](https://i.imgur.com/vkgHYCo.png)
 
 On the main screen we have (for now):
 
@@ -85,19 +88,19 @@ On the main screen we have (for now):
 
 A very intuitive interface, isn't it? Simple just select with a click the applications you want to back up, you can also use the filter bar to find more quickly those applications of which you have a notion of the name that has its package ID. Like the example you will see below:
 
-![3.Filter](screenshots/3.Filter.PNG)
+![3.Filter](https://i.imgur.com/BqZ9v16.png)
 
 When you select the applications the interface will change, and a new list will appear with the applications you have selected and the button to proceed with the backup.
 
-![4.Selected_Packages](screenshots/4.Selected_Packages.PNG)
+![4.Selected_Packages](https://i.imgur.com/l4Y8W0y.png)
 
 Once you are satisfied with your selection, press the **Backup** button. You will instantly be prompted to browse and select the destination directory for the apks to be backed up. Note that if you cancel the directory selection, the backup process will also be cancelled. Once you have selected the destination directory the backup process will start, and at the end you will see the following screen:
 
-![6.Results](screenshots/6.Results.PNG)
+![6.Results](https://i.imgur.com/8m1hNFg.png)
 
 (For now) the resulting file names will be the package IDs of each application, so our final directory would look like this:
 
-![7.Folder.PNG](screenshots/7.Folder.PNG.png)
+![7.Folder.PNG](https://i.imgur.com/Jla0xbD.png)
 
 </details>
 
@@ -107,9 +110,13 @@ Once you are satisfied with your selection, press the **Backup** button. You wil
 * Save each backed up apk with its application name (if available)
 * Support for other operating systems (Do you want to contribute?)
 
+
+
 ## 💪 - Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+
 
 ## 📝 - License
 [MIT](https://choosealicense.com/licenses/mit/)
