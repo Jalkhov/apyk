@@ -1,7 +1,8 @@
-from PyQt5 import QtWidgets
-import google_play_scraper as gps
-import subprocess
 import os
+import subprocess
+
+import google_play_scraper as gps
+from PyQt5 import QtWidgets
 
 
 def Ask(self, title, msg):
@@ -10,6 +11,15 @@ def Ask(self, title, msg):
 
     if answ == bsgbox.Yes:
         return True
+    else:
+        return False
+
+
+def GetDestiny(self):
+    fname = QtWidgets.QFileDialog.getExistingDirectory(
+        self, 'Select a directory', '')
+    if fname:
+        return fname
     else:
         return False
 

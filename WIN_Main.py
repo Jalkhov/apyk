@@ -56,7 +56,7 @@ class NewThread(QtCore.QThread):
                         self.NTSignal.emit(pkg)
 
             elif self.action == 'backup':
-                for pkg in self.param:
+                for pkg in self.param[0]:
                     results = []
                     for out in run("adb shell pm path {0}".format(pkg)):
                         results.append(out)
@@ -72,7 +72,7 @@ class NewThread(QtCore.QThread):
                     self.NTSignal.emit(b('Current package: ') + pkg)
                     self.NTSignal.emit(b('APK path: ') + target)
 
-                    for out in run(r"adb pull {0} apks\\{1}".format(target, pkg)):
+                    for out in run(r"adb pull {0} {1}\\{2}".format(target, self.param[1], pkg)):
                         if 'does not exist' in out:
                             self.NTSignal.emit(
                                 b('Status: ') + bred('Remote object does not exist'))
@@ -94,16 +94,32 @@ class BackupWindow(QtWidgets.QDialog, Ui_BackupDialog):
         self.SetLabelCount()
         self.SetBarConfig()
         self.count = 0
-
+        self.canStart = True
+        self.Destiny = ''
+        self.RequestFolder()
         # Create Thread Class for allow access from other methods
-        self.CollectThread = NewThread('backup', self.items)
-        self.StartBackup()
+        if self.canStart == True:
+            self.CollectThread = NewThread(
+                'backup', [self.items, self.Destiny])
+            self.StartBackup()
+        else:
+            self.Cancelled()
 
     def StartBackup(self):
         self.CollectThread.NTSignal.connect(self.BackupTHROut)
         self.CollectThread.finished.connect(self.AfterBackup)
         self.CollectThread.start()
         self.curr_process.setText('Backing up')
+
+    def RequestFolder(self):
+        dest = GetDestiny(self)
+        if dest == False:
+            self.canStart = False
+        else:
+            self.Destiny = dest
+
+    def Cancelled(self):
+        self.curr_process.setText('The backup process has been cancelled')
 
     def BackupTHROut(self, output):
         if not 'Step' in output:  # Show output in 'Console'
@@ -118,22 +134,25 @@ class BackupWindow(QtWidgets.QDialog, Ui_BackupDialog):
 
     def SetLabelCount(self):
         '''Assign number of packets to be processed to the label'''
-        self.pkgs_count.setText(str(len(items)))
+        self.pkgs_count.setText(str(len(self.items)))
 
     def SetBarConfig(self):
-        self.progressBar.setMaximum(self.itcount)
+        self.progressBar.setMaximum(len(self.items))
 
     def closeEvent(self, event):
-        if self.CollectThread.alive == True:
-            ask = Ask(
-                self, 'Exit?', 'There is a process in place, are you sure you want to leave?')
+        if hasattr('self', 'CollectThread'):
+            if self.CollectThread.alive == True:
+                ask = Ask(
+                    self, 'Exit?', 'There is a process in place, are you sure you want to leave?')
 
-            if ask == True:
-                self.CollectThread.alive = False
-                self.CollectThread.wait()
-                event.accept()
-            else:
-                event.ignore()
+                if ask == True:
+                    self.CollectThread.alive = False
+                    self.CollectThread.wait()
+                    event.accept()
+                else:
+                    event.ignore()
+        else:
+            event.accept()
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
