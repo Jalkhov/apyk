@@ -87,7 +87,7 @@ When you select the applications the interface will change, and a new list will 
 
 Once you are satisfied with your selection, press the **Backup** button. You will instantly be prompted to browse and select the destination directory for the apks to be backed up. Note that if you cancel the directory selection, the backup process will also be cancelled. Once you have selected the destination directory the backup process will start, and at the end you will see the following screen:
 
-![6.Results](C:\Users\jalkhov\Documents\GitHub\apyk\screenshots\6.Results.PNG)
+![6.Results](screenshots/6.Results.PNG)
 
 (For now) the resulting file names will be the package IDs of each application, so our final directory would look like this:
 
