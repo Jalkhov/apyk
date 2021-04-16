@@ -24,9 +24,7 @@ After install type **apyk** and press **Enter**
 
 ## ⬇️ - Download executable
 
-Download the latest version of **APyK** from [**HERE**](/jalkhov/apyk/releases/latest/download/asset-name.zip). After downloading extract and run the **apyk.exe** file located in the extracted folder.
-
-
+Download the latest version of **APyK** from [**HERE**](/jalkhov/apyk/releases/latest/download/asset-name.zip). After downloading extract and run the **apyk.exe** file located in the extracted folder. You will see many command line windows opening and closing in some processes, we will see if we can suppress them in future versions.
 
 ## 📘 - Usage
 
