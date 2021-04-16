@@ -10,7 +10,7 @@ except BaseException:
     from ui_backupscreen import Ui_BackupDialog
     from ui_main import *
 
-version = "0.0.13"
+version = "0.0.1"
 
 
 class NewThread(QtCore.QThread):
