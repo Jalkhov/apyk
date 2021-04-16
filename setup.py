@@ -1,3 +1,4 @@
+from apyk.win_main import version
 from setuptools import setup
 
 with open("README.md", encoding="utf-8") as f:
@@ -5,7 +6,7 @@ with open("README.md", encoding="utf-8") as f:
 
 setup(
     name="APyK",
-    version="0.0.1",
+    version=version,
     description="APyK is a program with which you will be able to backup your applications from your computer.",
     long_description=long_description,
     long_description_content_type="text/markdown",
