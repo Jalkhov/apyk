@@ -1,9 +1,14 @@
 import os
 import sys
 
-from Functions import *
-from UI_BackupScreen import Ui_BackupDialog
-from UI_Main import *
+try:
+    from apyk.functions import *
+    from apyk.ui_backupscreen import Ui_BackupDialog
+    from apyk.ui_main import *
+except BaseException:
+    from functions import *
+    from ui_backupscreen import Ui_BackupDialog
+    from ui_main import *
 
 version = "0.0.1"
 
