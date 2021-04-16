@@ -2,7 +2,7 @@
 
 APyK is a program with which you will be able to backup your applications from your computer, **FREE** and better yet **WITHOUT BEING ROOT**. Without further ado, let's get started.
 
-## :computer: - ​Pre-requisites
+## 💻 - Pre-requisites
 
 Have basic knowledge of **ADB (Android Debug Bridge)**, you will need to install it, add it to the environment variables and authorize your computer to access the device.
 
