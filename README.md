@@ -6,7 +6,7 @@ APyK is a program with which you will be able to backup your applications from y
 
 Have basic knowledge of **ADB (Android Debug Bridge)**, you will need to install it, add it to the environment variables and authorize your computer to access the device.
 
-APyK fue testeado y programado con **ADB version 1.0.32 Revision eac51f2bb6a8-android**.
+APyK was tested and programmed with **ADB version 1.0.32 Revision eac51f2bb6a8-android**.
 
 ## Installation from Python
 
@@ -23,6 +23,10 @@ After install type **apyk** and press **Enter**
 Download the latest version of **APyK** from [**HERE**](/jalkhov/apyk/releases/latest/download/asset-name.zip). After downloading extract and run the **apyk.exe** file located in the extracted folder.
 
 ## :blue_book: - Usage
+
+<details>
+  <summary>Click to expand mini-tutorial!</summary>
+
 
 ##### 👀 Remember
 
@@ -92,6 +96,8 @@ Once you are satisfied with your selection, press the **Backup** button. You wil
 (For now) the resulting file names will be the package IDs of each application, so our final directory would look like this:
 
 ![7.Folder.PNG](screenshots/7.Folder.PNG.png)
+
+</details>
 
 ## 💡- TODO
 
