@@ -15,7 +15,7 @@ executables = [Executable(
     target_name='apyk.exe',
     copyright='Copyright (C) 2021 Pedro Torcatt',
     base=base,
-    icon='apyk/icon.png'
+    icon='apyk/icon.ico'
 )]
 
 setup(

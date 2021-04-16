@@ -10,7 +10,7 @@ except BaseException:
     from ui_backupscreen import Ui_BackupDialog
     from ui_main import *
 
-version = "0.0.1"
+version = "0.0.13"
 
 
 class NewThread(QtCore.QThread):
@@ -94,7 +94,7 @@ class BackupWindow(QtWidgets.QDialog, Ui_BackupDialog):
     def __init__(self, parent, items):
         QtWidgets.QDialog.__init__(self, parent)
         self.setupUi(self)
-        self.setWindowIcon(QtGui.QIcon(os.path.join(ThisDir(), 'icon.png')))
+        self.setWindowIcon(QtGui.QIcon(os.path.join(ThisDir(), 'icon.ico')))
         self.items = items
         self.SetLabelCount()
         self.SetBarConfig()
@@ -166,7 +166,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         QtWidgets.QMainWindow.__init__(self)
         self.setupUi(self)
-        self.setWindowIcon(QtGui.QIcon(os.path.join(ThisDir(), 'icon.png')))
+        self.setWindowIcon(QtGui.QIcon(os.path.join(ThisDir(), 'icon.ico')))
         self.list_pkgs.itemSelectionChanged.connect(self.ShowSelected)
         self.filter_box.textChanged.connect(self.FilterPkgs)
         self.btn_backup.clicked.connect(self.StartBackup)
