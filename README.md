@@ -2,9 +2,6 @@
 
 APyK is a program with which you will be able to backup your applications from your computer, **FREE** and better yet **WITHOUT BEING ROOT**. Without further ado, let's get started.
 
-- [x] Backup APKs
-- [ ] Restore or install APKs
-
 ## :computer: - ​Pre-requisites
 
 Have basic knowledge of **ADB (Android Debug Bridge)**, you will need to install it, add it to the environment variables and authorize your computer to access the device.
@@ -70,6 +67,37 @@ At once I say that this option is courtesy of the library [**google-play-scraper
 ##### 🖥️ Main Screen
 
 Once you have made a decision regarding the above option, if you have the above **[HERE](#-remember)**, the program will automatically start searching for the installed applications, and if everything went well, it will display the respective list.
+
+![2.Main_Screen](screenshots/2.Main_Screen.PNG)
+
+On the main screen we have (for now):
+
+* ID of the detected device
+* Field to filter the listed applications
+* List of applications
+* And some very obvious buttons
+
+A very intuitive interface, isn't it? Simple just select with a click the applications you want to back up, you can also use the filter bar to find more quickly those applications of which you have a notion of the name that has its package ID. Like the example you will see below:
+
+![3.Filter](screenshots/3.Filter.PNG)
+
+When you select the applications the interface will change, and a new list will appear with the applications you have selected and the button to proceed with the backup.
+
+![4.Selected_Packages](screenshots/4.Selected_Packages.PNG)
+
+Once you are satisfied with your selection, press the **Backup** button. You will instantly be prompted to browse and select the destination directory for the apks to be backed up. Note that if you cancel the directory selection, the backup process will also be cancelled. Once you have selected the destination directory the backup process will start, and at the end you will see the following screen:
+
+![6.Results](C:\Users\jalkhov\Documents\GitHub\apyk\screenshots\6.Results.PNG)
+
+(For now) the resulting file names will be the package IDs of each application, so our final directory would look like this:
+
+![7.Folder.PNG](screenshots/7.Folder.PNG.png)
+
+## 💡- TODO
+
+* Restore or install APKs
+* Save each backed up apk with its application name (if available)
+* Support for other operating systems (Do you want to contribute?)
 
 ## 💪 - Contributing
 
