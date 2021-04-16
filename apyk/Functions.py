@@ -5,6 +5,10 @@ import google_play_scraper as gps
 from PyQt5 import QtWidgets
 
 
+def KillAdbServer():
+    os.system("adb kill-server")
+
+
 def Ask(self, title, msg):
     bsgbox = QtWidgets.QMessageBox
     answ = bsgbox.question(self, title, msg, bsgbox.Yes | bsgbox.No)

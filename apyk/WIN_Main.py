@@ -187,16 +187,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.CheckDevice()
 
-    def closeEvent(self, event):
-        if self.DoingSomething == True:
-            ask = Ask(
-                self, 'Exit?', 'There is a process in place, are you sure you want to leave?')
-
-            if ask == True:
-                sys.exit()
-            else:
-                event.ignore()
-
     def StartBackup(self):
         '''This starts the backup process, assigns the selected packets to a list and sends them to the window where they will be processed.'''
         pkgs = []
@@ -296,6 +286,20 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         else:
             self.selected_pkgs.setHidden(True)
             self.btn_backup.setHidden(True)
+
+    def closeEvent(self, event):
+        if self.DoingSomething == True:
+            ask = Ask(
+                self, 'Exit?', 'There is a process in place, are you sure you want to leave?')
+
+            if ask == True:
+                KillAdbServer()
+                sys.exit()
+            else:
+                event.ignore()
+        else:
+            KillAdbServer()
+            event.accept()
 
 
 def main():
