@@ -15,7 +15,7 @@ APyK was tested and programmed with **ADB version 1.0.32 Revision eac51f2bb6a8-a
 You can use **APyK** from Python.
 
 ```bash
-pip install apyk
+pip install APyK
 ```
 
 After install type **apyk** and press **Enter**
