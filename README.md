@@ -8,7 +8,7 @@ Have basic knowledge of **ADB (Android Debug Bridge)**, you will need to install
 
 APyK was tested and programmed with **ADB version 1.0.32 Revision eac51f2bb6a8-android**.
 
-## Installation from Python
+## 🐍 - Installation from Python
 
 You can use **APyK** from Python.
 
@@ -17,6 +17,8 @@ pip install apyk
 ```
 
 After install type **apyk** and press **Enter**
+
+<p align="center"><b>OR</b></p>
 
 ## :arrow_heading_down: ​- Download executable
 
