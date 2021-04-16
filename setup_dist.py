@@ -17,6 +17,7 @@ setup(
     keywords="adb android apk backup apps",
     packages=['apyk'],
     include_package_data=True,
+    python_requires='>=3.5',
     install_requires=[
         'PyQt5',
         'google_play_scraper'
