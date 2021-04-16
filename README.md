@@ -34,9 +34,9 @@ Download the latest version of **APyK** from [**HERE**](/jalkhov/apyk/releases/l
 * Have the device in debug mode.
 * And (of course), have the device connected to the computer via USB.
 
-🔎 **App name lookup**
+##### 🔎 App name lookup
 
-![1.Name_Lookup](/screenshots/1.Name_Lookup.PNG)
+![1.Name_Lookup](screenshots/1.Name_Lookup.PNG)
 
 This warning is due to the fact that when listing the applications installed on your device they will look approximately as follows:
 
@@ -46,7 +46,7 @@ com.whatsapp
 com.facebook.lite
 ```
 
-Each app in the playstore has a unique ID, and these are the ones that will be displayed in the list of apps, as you can see there are some that can be easily identified, however there are others whose IDs have nothing to do with the original name and for some people it is difficult to know which app corresponds, such as **Tik Tok**:
+Each app in the playstore has a **unique ID**, and these are the ones that will be displayed in the list of apps, as you can see there are some that can be easily identified, however there are others whose IDs have nothing to do with the original name and for some people it is difficult to know which app corresponds, such as **Tik Tok**:
 
 ```text
 com.zhiliaoapp.musically
@@ -63,13 +63,13 @@ com.zhiliaoapp.musically | Tik Tok
 
 Please note that this option requires an internet connection, and depending on the speed of the internet connection the list of applications will be loaded.
 
-**NOTE**: As it says in the warning, apps that do not belong to the Play Store will not be affected, since as I mentioned before, the search is done based on the ID with which the app is registered.*
+**NOTE**: As it says in the warning, apps that do not belong to the Play Store will not be affected, since as I mentioned before, the search is done based on the ID with which the app is registered.
 
 At once I say that this option is courtesy of the library [**google-play-scraper**](https://github.com/JoMingyu/google-play-scraper), credits to its creator.
 
-🖥️ **Main Screen**
+##### 🖥️ Main Screen
 
-Once you have made a decision regarding the above option, if you have the above **[HERE](#remember)**, the program will automatically start searching for the installed applications, and if everything went well, it will display the respective list.
+Once you have made a decision regarding the above option, if you have the above **[HERE](#-remember)**, the program will automatically start searching for the installed applications, and if everything went well, it will display the respective list.
 
 ## 💪 - Contributing
 
