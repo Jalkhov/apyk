@@ -1,3 +1,6 @@
+# Files for automate packages dist/upload
+pypi.*
+
 .pypirc
 
 # Download Folder for test
