@@ -15,13 +15,14 @@ setup(
     license="MIT",
     keywords="adb android apk backup apps",
     packages=['apyk'],
+    include_package_data=True,
     install_requires=[
         'PyQt5',
         'google_play_scraper'
     ],
     entry_points={
         'console_scripts': [
-            'apyk = apyk.WIN_Main:main',
+            'apyk=apyk.win_main:main',
         ],
     },
     classifiers=[
