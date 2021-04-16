@@ -31,6 +31,6 @@ setup(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: Microsoft :: Windows",
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
     ],
 )
