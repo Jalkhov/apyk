@@ -53,7 +53,7 @@ def run(command):
 def about(self, v):
     QAlert = QtWidgets.QMessageBox()
     QAlert.about(self, "About APyK",
-                 'APyK v{0} by Pedro Torcatt\n\nIcon by GuillenDesign'.format(v))
+                 'APyK v{0} by Pedro Torcatt\n\nhttps://github.com/Jalkhov/apyk\n\nIcon by GuillenDesign'.format(v))
 
 
 def SearchName(self):
